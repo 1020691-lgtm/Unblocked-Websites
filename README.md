@@ -1,1 +1,2549 @@
-# Unblocked-Websites
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unblocked Games</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .game-menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .game-btn {
+            background: white;
+            border: none;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #667eea;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .game-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            background: #f0f0f0;
+        }
+
+        .game-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .game-area {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            display: none;
+        }
+
+        .game-area.active {
+            display: block;
+        }
+
+        .game-title {
+            font-size: 1.8em;
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Tic Tac Toe */
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            margin-bottom: 20px;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            background: #f0f0f0;
+            border: 2px solid #667eea;
+            font-size: 2em;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #667eea;
+            transition: all 0.2s;
+        }
+
+        .cell:hover {
+            background: #e8e8e8;
+        }
+
+        /* Rock Paper Scissors */
+        .game-options {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .choice-btn {
+            padding: 15px 25px;
+            font-size: 1em;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .choice-btn:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+
+        .score-board {
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .score-display {
+            font-size: 1.3em;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .result {
+            font-size: 1.5em;
+            color: #667eea;
+            font-weight: bold;
+            margin: 15px 0;
+            min-height: 30px;
+        }
+
+        /* Memory Game */
+        .memory-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px auto;
+            max-width: 400px;
+        }
+
+        .memory-card {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 2em;
+            color: white;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .memory-card:hover {
+            transform: scale(1.05);
+        }
+
+        .memory-card.flipped {
+            background: white;
+            color: #333;
+        }
+
+        /* Snake Game */
+        #snakeCanvas {
+            border: 2px solid #667eea;
+            background: #f0f0f0;
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+        }
+
+        .controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            margin: 5px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+
+        .stats {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .back-btn {
+            background: #999;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .back-btn:hover {
+            background: #777;
+        }
+
+        /* Clicker Games */
+        .clicker-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+
+        .clicker-btn {
+            width: 200px;
+            height: 200px;
+            font-size: 4em;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            cursor: pointer;
+            transition: all 0.1s;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .clicker-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .clicker-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Simulator Styles */
+        .simulator-display {
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .simulator-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+
+        .sim-btn {
+            padding: 12px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .sim-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .sim-btn:active {
+            transform: translateY(0);
+        }
+
+        .pet-display {
+            background: linear-gradient(135deg, #fff5e1, #ffe8cc);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pet-emoji {
+            font-size: 5em;
+            margin: 20px 0;
+        }
+
+        .pet-stats {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            width: 100%;
+        }
+
+        .stat-bar {
+            width: 100%;
+            height: 25px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            margin: 8px 0;
+            overflow: hidden;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8em;
+        }
+
+        .stat-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fishing-area {
+            background: linear-gradient(180deg, #87ceeb, #e0f6ff);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 15px 0;
+            min-height: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fishing-pond {
+            background: linear-gradient(180deg, #4a90e2, #2c5aa0);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            min-height: 150px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .fish {
+            font-size: 2em;
+            animation: swim 4s infinite;
+        }
+
+        @keyframes swim {
+            0%, 100% { transform: translateX(-100px); }
+            50% { transform: translateX(100px); }
+        }
+
+        .car-display {
+            background: linear-gradient(180deg, #e0f2f1, #b2dfdb);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 15px 0;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .car-emoji {
+            font-size: 6em;
+            margin: 20px 0;
+            animation: move 2s infinite;
+        }
+
+        @keyframes move {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(30px); }
+        }
+
+        .car-dashboard {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .dashboard-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 12px 0;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        /* Owner Panel */
+        .owner-panel {
+            display: none;
+            background: #fff3cd;
+            border: 3px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .owner-panel.active {
+            display: block;
+        }
+
+        .owner-panel h4 {
+            color: #ff6b6b;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .owner-control {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .owner-control label {
+            font-weight: bold;
+            color: #333;
+            font-size: 0.9em;
+        }
+
+        .owner-control input {
+            padding: 5px;
+            border: 2px solid #ff6b6b;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+
+        .owner-control button {
+            grid-column: 1 / -1;
+            padding: 8px 15px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .owner-control button:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+        }
+
+        /* Admin Login Modal */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-modal.active {
+            display: flex;
+        }
+
+        .login-box {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .login-box h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        .login-box input:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        .login-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .login-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 120px;
+        }
+
+        .login-btn.submit {
+            background: #667eea;
+            color: white;
+        }
+
+        .login-btn.submit:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .login-btn.cancel {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .login-btn.cancel:hover {
+            background: #bdbdbd;
+        }
+
+        .login-error {
+            color: #ff6b6b;
+            margin-top: 10px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .login-error.show {
+            display: block;
+        }
+
+        /* User Login Modal */
+        .user-login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .user-login-modal.active {
+            display: flex;
+        }
+
+        .user-login-box {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .user-login-box h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .user-login-box input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        .user-login-box input:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        .user-login-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .user-login-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 110px;
+        }
+
+        .user-login-btn.login {
+            background: #667eea;
+            color: white;
+        }
+
+        .user-login-btn.login:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .user-login-btn.guest {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .user-login-btn.guest:hover {
+            background: #bdbdbd;
+        }
+
+        .user-profile {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+            color: #667eea;
+            font-size: 0.9em;
+        }
+
+        .user-profile.guest {
+            color: #ff9800;
+        }
+
+        .user-profile button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .user-profile button:hover {
+            background: #764ba2;
+        }
+
+        .user-profile button.logout {
+            background: #ff6b6b;
+        }
+
+        .user-profile button.logout:hover {
+            background: #ff5252;
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Login Modal -->
+    <div id="login-modal" class="login-modal">
+        <div class="login-box">
+            <h2>🔐 Admin Login</h2>
+            <input type="password" id="admin-password" placeholder="Enter admin password" />
+            <div id="login-error" class="login-error">Invalid password. Try again.</div>
+            <div class="login-buttons">
+                <button class="login-btn submit" onclick="attemptAdminLogin()">Login</button>
+                <button class="login-btn cancel" onclick="closeLoginModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <!-- User Login Modal -->
+    <div id="user-login-modal" class="user-login-modal">
+        <div class="user-login-box">
+            <h2>📧 User Login</h2>
+            <input type="email" id="user-email" placeholder="Enter your email" />
+            <input type="text" id="user-name" placeholder="Enter your name" />
+            <input type="password" id="user-password" placeholder="Enter a password" />
+            <div id="user-login-error" class="login-error">Invalid credentials. Try again.</div>
+            <div class="user-login-buttons">
+                <button class="user-login-btn login" onclick="attemptUserLogin()">Login/Register</button>
+                <button class="user-login-btn guest" onclick="continueAsGuest()">Play as Guest</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div id="admin-panel-modal" class="user-login-modal">
+        <div class="user-login-box" style="max-width: 600px;">
+            <h2>🔧 Admin Panel</h2>
+            <div style="text-align: left; margin: 20px 0;">
+                <button class="btn" onclick="adminResetLeaderboard()" style="width: 100%; margin: 5px 0; background: #ff6b6b;">Reset All Leaderboard Data</button>
+                <button class="btn" onclick="adminResetAccounts()" style="width: 100%; margin: 5px 0; background: #ff6b6b;">Reset All Accounts</button>
+                <button class="btn" onclick="adminViewAccounts()" style="width: 100%; margin: 5px 0; background: #4caf50;">View All Accounts</button>
+                <button class="btn" onclick="adminBanAccount()" style="width: 100%; margin: 5px 0; background: #ff9800;">Ban/Remove Account</button>
+                <button class="btn" onclick="adminMakeAdmin()" style="width: 100%; margin: 5px 0; background: #9c27b0;">Make Someone Admin</button>
+                <button class="btn" onclick="adminAbuseMenu()" style="width: 100%; margin: 5px 0; background: #e91e63;">Start Admin Abuse</button>
+            </div>
+            <button class="btn" onclick="closeAdminPanel()" style="width: 100%; background: #999;">Close</button>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div id="user-profile" class="user-profile">
+            <span id="profile-text">👤 Guest</span>
+            <button onclick="openUserLoginModal()">Login</button>
+        </div>
+        
+        <div class="header">
+            <h1>🎮 Unblocked Games website</h1>
+            <h3>Play anytime!</h3>
+            <p>(Updates every month)</p>
+        </div>
+
+        <!-- Admin Abuse Warning -->
+        <div id="admin-abuse-warning" style="display: none; background: #ff4444; color: white; text-align: center; padding: 10px; font-weight: bold; font-size: 1.2em; margin-bottom: 20px; border-radius: 5px;">
+            ⚠️ ADMIN ABUSE ACTIVE (started by an admin) ⚠️
+        </div>
+
+        <!-- Menu -->
+        <div id="menu" class="game-menu">
+            <button class="game-btn" onclick="startGame('tictactoe')">Tic Tac Toe</button>
+            <button class="game-btn" onclick="startGame('rps')">Rock Paper Scissors</button>
+            <button class="game-btn" onclick="startGame('memory')">Memory Game</button>
+            <button class="game-btn" onclick="startGame('snake')">Snake</button>
+            <button class="game-btn" onclick="startGame('cookie')">🍪 Cookie Clicker</button>
+            <button class="game-btn" onclick="startGame('tap')">⚡ Tap Tap Tap</button>
+            <button class="game-btn" onclick="startGame('pet')">🐶 Pet Simulator</button>
+            <button class="game-btn" onclick="startGame('fishing')">🎣 Fishing</button>
+            <button class="game-btn" onclick="startGame('car')">🚗 Car Simulator</button>
+            <button class="game-btn" id="leaderboard-btn" onclick="startGame('leaderboard')" style="background: #4caf50; color: white;">🏆 Leaderboard</button>
+        </div>
+
+        <!-- Tic Tac Toe -->
+        <div id="tictactoe-game" class="game-area">
+            <button class="btn back-btn" onclick="backToMenu()">← Back to Menu</button>
+            <div class="game-title">Tic Tac Toe</div>
+            <div class="board" id="board">
+                <div class="cell" onclick="makeMove(0)"></div>
+                <div class="cell" onclick="makeMove(1)"></div>
+                <div class="cell" onclick="makeMove(2)"></div>
+                <div class="cell" onclick="makeMove(3)"></div>
+                <div class="cell" onclick="makeMove(4)"></div>
+                <div class="cell" onclick="makeMove(5)"></div>
+                <div class="cell" onclick="makeMove(6)"></div>
+                <div class="cell" onclick="makeMove(7)"></div>
+                <div class="cell" onclick="makeMove(8)"></div>
+            </div>
+            <div class="score-board">
+                <div class="score-display" id="ttt-status">You are X, Computer is O</div>
+                <button class="btn" onclick="resetTicTacToe()">New Game</button>
+            </div>
+        </div>
+
+        <!-- Rock Paper Scissors -->
+        <div id="rps-game" class="game-area">
+            <button class="btn back-btn" onclick="backToMenu()">← Back to Menu</button>
+            <div class="game-title">Rock Paper Scissors</div>
+            <div class="game-options">
+                <button class="choice-btn" onclick="playRPS('rock')">🪨 Rock</button>
+                <button class="choice-btn" onclick="playRPS('paper')">📄 Paper</button>
+                <button class="choice-btn" onclick="playRPS('scissors')">✂️ Scissors</button>
+            </div>
+            <div class="score-board">
+                <div id="rps-result" class="result"></div>
+                <div class="score-display">Score: <span id="rps-wins">0</span> - <span id="rps-losses">0</span></div>
+                <button class="btn" onclick="resetRPS()">Reset Score</button>
+            </div>
+        </div>
+
+        <!-- Memory Game -->
+        <div id="memory-game" class="game-area">
+            <button class="btn back-btn" onclick="backToMenu()">← Back to Menu</button>
+            <div class="game-title">Memory Game (2 Players)</div>
+            <div class="score-board" style="margin-bottom: 15px;">
+                <div class="score-display" id="memory-turn">Player 1's Turn</div>
+            </div>
+            <div class="memory-board" id="memory-board"></div>
+            <div class="score-board">
+                <div class="score-display">Player 1 Matches: <span id="memory-p1-score">0</span> | Player 2 Matches: <span id="memory-p2-score">0</span></div>
+                <div class="score-display">Total Pairs Found: <span id="memory-matches">0</span>/8</div>
+                <button class="btn" onclick="resetMemory()">New Game</button>
+            </div>
+        </div>
+
+        <!-- Snake Game -->
+        <div id="snake-game" class="game-area">
+            <button class="btn back-btn" onclick="backToMenu()">← Back to Menu</button>
+            <div class="game-title">Snake</div>
+            <canvas id="snakeCanvas" width="400" height="400"></canvas>
+            <div class="controls">
+                <button class="btn" onclick="toggleSnakeGame()">Start/Pause</button>
+                <button class="btn" onclick="resetSnake()">New Game</button>
+            </div>
+            <div class="stats">
+                <div class="score-display">Score: <span id="snake-score">0</span></div>
+            </div>
+        </div>
+
+        <!-- Cookie Clicker -->
+        <div id="cookie-game" class="game-area">
+            <button class="btn back-btn" onclick="backToMenu()">← Back to Menu</button>
+            <div class="game-title">🍪 Cookie Clicker</div>
+            <div class="clicker-area">
+                <button class="clicker-btn" onclick="clickCookie()">🍪</button>
+                <div class="score-board" style="margin-top: 30px;">
+                    <div class="score-display">Cookies: <span id="cookie-count">0</span></div>
+                    <div class="score-display">Per Click: <span id="cookie-per-click">1</span>x | Per Second: <span id="cookie-per-sec">0</span></div>
+                    <div class="score-display">Crit Chance: <span id="cookie-crit-chance">0</span>% | Crit Damage: <span id="cookie-crit-damage">1</span>x</div>
+                </div>
+            </div>
+            <div style="background: #f9f9f9; padding: 15px; border-radius: 10px; margin-top: 20px;">
+                <h3 style="color: #667eea; margin-bottom: 15px;">🛒 Upgrades</h3>
+                <div style="background: white; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 0.95em;">
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                        <div>👆 Cursor: <span id="price-cursor">15</span> 🍪</div>
+                        <div>👵 Grandma: <span id="price-grandma">100</span> 🍪</div>
+                        <div>🚜 Farm: <span id="price-farm">500</span> 🍪</div>
+                        <div>🏭 Factory: <span id="price-factory">2000</span> 🍪</div>
+                        <div>⚡ Synergy: <span id="price-synergy">5000</span> 🍪</div>
+                        <div>💥 Crit: <span id="price-crit">10000</span> 🍪</div>
+                        <div>⭐ OP Clicker: <span id="price-opclicker">50000</span> 🍪</div>
+                        <div>🔱 GOD Clicker: <span id="price-godclicker">100000</span> 🍪</div>
+                    </div>
+                </div>
+                <div class="simulator-controls">
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px;">
+                        <button class="sim-btn" onclick="buyCookieUpgrade('cursor')" id="btn-cursor" style="font-size: 0.8em;">👆 Cursor (1)</button>
+                        <button class="sim-btn" onclick="buyMaxCookieUpgrade('cursor')" style="font-size: 0.8em; background: #4caf50;">👆 Max</button>
+                        <button class="sim-btn" onclick="buyCookieUpgrade('grandma')" id="btn-grandma" style="font-size: 0.8em;">👵 Grandma (1)</button>
+                        <button class="sim-btn" onclick="buyMaxCookieUpgrade('grandma')" style="font-size: 0.8em; background: #4caf50;">👵 Max</button>
+                        <button class="sim-btn" onclick="buyCookieUpgrade('farm')" id="btn-farm" style="font-size: 0.8em;">🚜 Farm (1)</button>
+                        <button class="sim-btn" onclick="buyMaxCookieUpgrade('farm')" style="font-size: 0.8em; background: #4caf50;">🚜 Max</button>
+                        <button class="sim-btn" onclick="buyCookieUpgrade('factory')" id="btn-factory" style="font-size: 0.8em;">🏭 Factory (1)</button>
+                        <button class="sim-btn" onclick="buyMaxCookieUpgrade('factory')" style="font-size: 0.8em; background: #4caf50;">🏭 Max</button>
+                        <button class="sim-btn" onclick="buyCookieUpgrade('synergy')" id="btn-synergy" style="font-size: 0.8em;">⚡ Synergy (1)</button>
+                        <button class="sim-btn" onclick="buyMaxCookieUpgrade('synergy')" style="font-size: 0.8em; background: #4caf50;">⚡ Max</button>
+                        <button class="sim-btn" onclick="buyCookieUpgrade('crit')" id="btn-crit" style="font-size: 0.8em;">💥 Crit (1)</button>
+                        <button class="sim-btn" onclick="buyMaxCookieUpgrade('crit')" style="font-size: 0.8em; background: #4caf50;">💥 Max</button>
+                        <button class="sim-btn" onclick="buyCookieUpgrade('opclicker')" id="btn-opclicker" style="font-size: 0.8em;">⭐ OP (1)</button>
+                        <button class="sim-btn" onclick="buyMaxCookieUpgrade('opclicker')" style="font-size: 0.8em; background: #4caf50;">⭐ Max</button>
+                        <button class="sim-btn" onclick="buyCookieUpgrade('godclicker')" id="btn-godclicker" style="font-size: 0.8em;">🔱 GOD (1)</button>
+                        <button class="sim-btn" onclick="buyMaxCookieUpgrade('godclicker')" style="font-size: 0.8em; background: #4caf50;">🔱 Max</button>
+                    </div>
+                    <button class="sim-btn" onclick="buyAllMaxCookieUpgrades()" style="width: 100%; margin-top: 10px; background: #ff9800; color: white; font-weight: bold;">🛒 BUY ALL MAX</button>
+                </div>
+            </div>
+            <div class="owner-panel" id="owner-cookie">
+                <h4>� Admin Panel - Cookie Clicker</h4>
+                <div class="owner-control">
+                    <label>Cookies:</label>
+                    <input type="number" id="owner-cookies" value="0">
+                </div>
+                <div class="owner-control">
+                    <label>Per Click:</label>
+                    <input type="number" id="owner-click" value="1">
+                </div>
+                <div class="owner-control">
+                    <label>Per Second:</label>
+                    <input type="number" id="owner-persec" value="0">
+                </div>
+                <div class="owner-control">
+                    <button onclick="applyOwnerCookie()">Apply Changes</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tap Tap Tap -->
+        <div id="tap-game" class="game-area">
+            <button class="btn back-btn" onclick="backToMenu()">← Back to Menu</button>
+            <div class="game-title">⚡ Tap Tap Tap</div>
+            <div class="clicker-area">
+                <button class="clicker-btn" onclick="tapButton()" style="background: linear-gradient(135deg, #f093fb, #f5576c);">TAP ME!</button>
+                <div class="score-board" style="margin-top: 30px;">
+                    <div class="score-display">Taps: <span id="tap-count">0</span></div>
+                    <div class="score-display">Time Left: <span id="tap-time">30</span>s</div>
+                    <button class="btn" onclick="startTapGame()" id="tap-start-btn">Start Game (30s)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pet Simulator -->
+        <div id="pet-game" class="game-area">
+            <button class="btn back-btn" onclick="backToMenu()">← Back to Menu</button>
+            <div class="game-title">🐶 Pet Simulator</div>
+            <div class="pet-display">
+                <div class="pet-emoji" id="pet-emoji">🐶</div>
+                <div class="pet-stats">
+                    <div>Happiness: <span id="pet-happiness">50</span>%</div>
+                    <div class="stat-bar"><div class="stat-fill" id="happiness-bar" style="width: 50%;"></div></div>
+                    <div>Hunger: <span id="pet-hunger">50</span>%</div>
+                    <div class="stat-bar"><div class="stat-fill" id="hunger-bar" style="width: 50%; background: #ff9800;"></div></div>
+                    <div>Energy: <span id="pet-energy">50</span>%</div>
+                    <div class="stat-bar"><div class="stat-fill" id="energy-bar" style="width: 50%; background: #4caf50;"></div></div>
+                </div>
+            </div>
+            <div class="simulator-controls">
+                <button class="sim-btn" onclick="petAction('feed')">🍖 Feed</button>
+                <button class="sim-btn" onclick="petAction('play')">🎾 Play</button>
+                <button class="sim-btn" onclick="petAction('rest')">😴 Rest</button>
+                <button class="sim-btn" onclick="changePet()">Change Pet</button>
+            </div>
+            <div class="owner-panel" id="owner-pet">
+                <h4>� Admin Panel - Pet Simulator</h4>
+                <div class="owner-control">
+                    <label>Happiness:</label>
+                    <input type="number" id="owner-happiness" value="50" min="0" max="100">
+                </div>
+                <div class="owner-control">
+                    <label>Hunger:</label>
+                    <input type="number" id="owner-hunger" value="50" min="0" max="100">
+                </div>
+                <div class="owner-control">
+                    <label>Energy:</label>
+                    <input type="number" id="owner-energy" value="50" min="0" max="100">
+                </div>
+                <div class="owner-control">
+                    <button onclick="applyOwnerPet()">Apply Changes</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fishing Simulator -->
+        <div id="fishing-game" class="game-area">
+            <button class="btn back-btn" onclick="backToMenu()">← Back to Menu</button>
+            <div class="game-title">🎣 Fishing Simulator</div>
+            <div class="fishing-pond">
+                <div id="fishing-display">Cast your line...</div>
+            </div>
+            <div class="score-board">
+                <div class="score-display">Fish Caught: <span id="fish-caught">0</span></div>
+                <div class="score-display">Total Weight: <span id="total-weight">0</span> lbs</div>
+            </div>
+            <div class="simulator-controls">
+                <button class="sim-btn" onclick="castFishingLine()">🎣 Cast Line</button>
+                <button class="sim-btn" onclick="resetFishing()">New Session</button>
+            </div>
+        </div>
+
+        <!-- Car Simulator -->
+        <div id="car-game" class="game-area">
+            <button class="btn back-btn" onclick="backToMenu()">← Back to Menu</button>
+            <div class="game-title">🚗 Car Simulator</div>
+            <div class="car-display">
+                <div class="car-emoji" id="car-emoji">🚗</div>
+                <div class="car-dashboard">
+                    <div class="dashboard-item">
+                        <span>Speed:</span>
+                        <span><span id="car-speed">0</span> mph (Max: <span id="car-max-speed">120</span>)</span>
+                    </div>
+                    <div class="dashboard-item">
+                        <span>Acceleration:</span>
+                        <span><span id="car-accel">15</span> mph/tap</span>
+                    </div>
+                    <div class="dashboard-item">
+                        <span>Fuel:</span>
+                        <span><span id="car-fuel">100</span>% | Tank: <span id="car-tank-size">100</span>%</span>
+                    </div>
+                    <div class="dashboard-item">
+                        <span>Efficiency:</span>
+                        <span><span id="car-efficiency">5</span>% per tap</span>
+                    </div>
+                    <div class="dashboard-item">
+                        <span>Distance:</span>
+                        <span><span id="car-distance">0</span> miles</span>
+                    </div>
+                    <div class="dashboard-item">
+                        <span>Total Cost:</span>
+                        <span>$<span id="car-cost">0</span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="simulator-controls">
+                <button class="sim-btn" onclick="driveCarSimulator()">Accelerate</button>
+                <button class="sim-btn" onclick="refuelCar()">Gas Up ($100)</button>
+                <button class="sim-btn" onclick="resetCar()">Park & Reset</button>
+            </div>
+            <div style="background: #f9f9f9; padding: 15px; border-radius: 10px; margin-top: 20px;">
+                <h3 style="color: #667eea; margin-bottom: 15px;">🔧 Car Upgrades</h3>
+                <div class="simulator-controls">
+                    <button class="sim-btn" onclick="buyCarUpgrade('engine')" id="btn-engine">⚙️ Engine</button>
+                    <button class="sim-btn" onclick="buyCarUpgrade('turbo')" id="btn-turbo">🔥 Turbo</button>
+                    <button class="sim-btn" onclick="buyCarUpgrade('tank')" id="btn-tank">🛢️ Tank</button>
+                    <button class="sim-btn" onclick="buyCarUpgrade('tires')" id="btn-tires">🛞 Tires</button>
+                    <button class="sim-btn" onclick="buyCarUpgrade('nitro')" id="btn-nitro">💨 Nitro Boost</button>
+                    <button class="sim-btn" onclick="buyCarUpgrade('aerodynamics')" id="btn-aero">💎 Aerodynamics</button>
+                </div>
+            </div>
+            <div class="owner-panel" id="owner-car">
+                <h4>� Admin Panel - Car Simulator</h4>
+                <div class="owner-control">
+                    <label>Speed:</label>
+                    <input type="number" id="owner-speed" value="0">
+                </div>
+                <div class="owner-control">
+                    <label>Fuel:</label>
+                    <input type="number" id="owner-fuel" value="100">
+                </div>
+                <div class="owner-control">
+                    <label>Distance:</label>
+                    <input type="number" id="owner-distance" value="0">
+                </div>
+                <div class="owner-control">
+                    <label>Money:</label>
+                    <input type="number" id="owner-money" value="0">
+                </div>
+                <div class="owner-control">
+                    <button onclick="applyOwnerCar()">Apply Changes</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div id="leaderboard-game" class="game-area">
+            <button class="btn back-btn" onclick="backToMenu()">← Back to Menu</button>
+            <div class="game-title">🏆 Global Leaderboard</div>
+            <div style="background: #f5f5f5; padding: 20px; border-radius: 10px;">
+                <div id="leaderboard-login-prompt" style="text-align: center; padding: 40px;">
+                    <p style="font-size: 1.2em; color: #667eea; margin-bottom: 20px;">📊 Sign in to view the leaderboard and save your scores!</p>
+                    <button class="btn" onclick="openUserLoginModal()" style="background: #667eea; color: white; padding: 15px 30px; font-size: 1.1em;">Login to View Leaderboard</button>
+                </div>
+                <div id="leaderboard-content" style="display: none;">
+                    <h3 style="color: #333; margin-bottom: 15px;">Top Scores</h3>
+                    <div id="leaderboard-list" style="max-height: 500px; overflow-y: auto;">
+                        <p style="color: #999; text-align: center;">Loading leaderboard...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script>
+        let currentGame = null;
+        
+        // User Authentication System
+        let currentUser = null;
+        let isGuest = true;
+        let isOwner = false;
+        const OWNER_EMAILS = ['1020691@schoolsnet.act.edu.au']; // Owner accounts
+        let userStats = {
+            cookieClickerHighScore: 0,
+            tapTapTapHighScore: 0,
+            fishingTotalWeight: 0,
+            carSimulatorHighDistance: 0,
+            memoryGamesPlayed: 0,
+            snakeHighScore: 0
+        };
+
+        // Admin Authentication System
+        const ADMIN_PASSWORD = 'SchoolOnlyGames!'; // Change this to your desired password
+        let adminAuthenticated = false;
+        let pendingAdminPanel = null;
+
+        // Admin Abuse System
+        let adminAbuseActive = false;
+        let adminAbuseStage = 0; // 0 = off, 1 = 2x, 2 = 4x, 3 = 10x
+
+        // User Authentication Functions
+        function openUserLoginModal() {
+            document.getElementById('user-email').value = '';
+            document.getElementById('user-name').value = '';
+            document.getElementById('user-password').value = '';
+            document.getElementById('user-login-error').classList.remove('show');
+            document.getElementById('user-login-modal').classList.add('active');
+            document.getElementById('user-email').focus();
+        }
+
+        function closeUserLoginModal() {
+            document.getElementById('user-login-modal').classList.remove('active');
+            document.getElementById('user-email').value = '';
+            document.getElementById('user-name').value = '';
+            document.getElementById('user-password').value = '';
+        }
+
+        function attemptUserLogin() {
+            const email = document.getElementById('user-email').value.trim();
+            const name = document.getElementById('user-name').value.trim();
+            const password = document.getElementById('user-password').value;
+            const errorDisplay = document.getElementById('user-login-error');
+
+            if (!email || !name || !password) {
+                errorDisplay.textContent = 'Please fill in all fields: email, name, and password.';
+                errorDisplay.classList.add('show');
+                return;
+            }
+
+            if (!email.includes('@')) {
+                errorDisplay.textContent = 'Please enter a valid email address.';
+                errorDisplay.classList.add('show');
+                return;
+            }
+
+            if (password.length < 4) {
+                errorDisplay.textContent = 'Password must be at least 4 characters long.';
+                errorDisplay.classList.add('show');
+                return;
+            }
+
+            // Check if account exists
+            const existingAccount = localStorage.getItem(`user_${email}`);
+            if (existingAccount) {
+                const accountData = JSON.parse(existingAccount);
+                if (accountData.user.password !== password) {
+                    errorDisplay.textContent = 'Incorrect password for this email.';
+                    errorDisplay.classList.add('show');
+                    document.getElementById('user-password').value = '';
+                    return;
+                }
+                // Login with existing account
+                currentUser = accountData.user;
+            } else {
+                // Create new account
+                currentUser = { email, name, password, joinDate: new Date().toLocaleString() };
+            }
+
+            isGuest = false;
+            isOwner = OWNER_EMAILS.includes(email);
+            errorDisplay.classList.remove('show');
+            closeUserLoginModal();
+            updateProfileDisplay();
+            loadUserStats();
+            saveUserStats();
+        }
+
+        function continueAsGuest() {
+            currentUser = null;
+            isGuest = true;
+            closeUserLoginModal();
+            updateProfileDisplay();
+        }
+
+        function logoutUser() {
+            currentUser = null;
+            isGuest = true;
+            isOwner = false;
+            adminAuthenticated = false;
+            stopAdminAbuse(); // Stop any active admin abuse
+            userStats = {
+                cookieClickerHighScore: 0,
+                tapTapTapHighScore: 0,
+                fishingTotalWeight: 0,
+                carSimulatorHighDistance: 0,
+                memoryGamesPlayed: 0,
+                snakeHighScore: 0
+            };
+            updateProfileDisplay();
+            if (currentGame) {
+                backToMenu();
+            }
+        }
+
+        function resetAllLogins() {
+            // Clear all user accounts and leaderboard data
+            const keysToRemove = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('user_') || key === 'global_leaderboard') {
+                    keysToRemove.push(key);
+                }
+            }
+            keysToRemove.forEach(key => localStorage.removeItem(key));
+            
+            // Reset current session
+            logoutUser();
+            continueAsGuest();
+            alert('✓ All user accounts and leaderboard data have been reset!');
+        }
+
+        function updateProfileDisplay() {
+            const profileEl = document.getElementById('user-profile');
+            const profileText = document.getElementById('profile-text');
+            
+            if (isGuest) {
+                profileEl.className = 'user-profile guest';
+                profileText.textContent = '👤 Guest (No Save)';
+                profileEl.innerHTML = '<span id="profile-text">👤 Guest (No Save)</span><button onclick="openUserLoginModal()">Login</button>';
+            } else if (isOwner) {
+                profileEl.className = 'user-profile';
+                profileEl.innerHTML = `<span id="profile-text">👑 ${currentUser.name}</span><span style="cursor:pointer; text-decoration:underline; color: #ffc107; margin-left: 10px;" onclick="openAdminPanel()">[ADMIN]</span><button onclick="logoutUser()" class="logout">Logout</button>`;
+            } else {
+                profileEl.className = 'user-profile';
+                profileEl.innerHTML = `<span id="profile-text">✅ ${currentUser.name}</span><button onclick="logoutUser()" class="logout">Logout</button>`;
+            }
+        }
+
+        function saveUserStats() {
+            if (!isGuest && currentUser) {
+                const userData = {
+                    user: currentUser,
+                    stats: userStats,
+                    lastUpdated: new Date().toLocaleString()
+                };
+                localStorage.setItem(`user_${currentUser.email}`, JSON.stringify(userData));
+                
+                // Also save to a global leaderboard list
+                let leaderboard = JSON.parse(localStorage.getItem('global_leaderboard') || '[]');
+                const userIndex = leaderboard.findIndex(u => u.user.email === currentUser.email);
+                if (userIndex >= 0) {
+                    leaderboard[userIndex] = userData;
+                } else {
+                    leaderboard.push(userData);
+                }
+                localStorage.setItem('global_leaderboard', JSON.stringify(leaderboard));
+            }
+        }
+
+        function loadUserStats() {
+            if (!isGuest && currentUser) {
+                const userData = localStorage.getItem(`user_${currentUser.email}`);
+                if (userData) {
+                    const parsed = JSON.parse(userData);
+                    // Verify password matches
+                    if (parsed.user.password === currentUser.password) {
+                        userStats = parsed.stats;
+                    }
+                }
+            }
+        }
+
+        function openOwnerDashboard() {
+            if (!isOwner) {
+                alert('Access denied. Owner only.');
+                return;
+            }
+            
+            const ownerPanel = confirm(
+                '👑 OWNER DASHBOARD\n\n' +
+                'Select an action:\n\n' +
+                'OK - Reset All User Accounts & Leaderboard\n' +
+                'Cancel - Close Dashboard'
+            );
+            
+            if (ownerPanel) {
+                const confirmReset = confirm(
+                    '⚠️ WARNING ⚠️\n\n' +
+                    'This will DELETE ALL user accounts and leaderboard data.\n' +
+                    'This action cannot be undone!\n\n' +
+                    'Are you absolutely sure?'
+                );
+                
+                if (confirmReset) {
+                    resetAllLogins();
+                }
+            }
+        }
+
+        function openAdminPanel() {
+            if (!isOwner) {
+                alert('Access denied. Admin only.');
+                return;
+            }
+            document.getElementById('admin-panel-modal').classList.add('active');
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('admin-panel-modal').classList.remove('active');
+        }
+
+        function adminResetLeaderboard() {
+            if (!isOwner) return;
+            if (confirm('⚠️ Reset ALL leaderboard data? This cannot be undone!')) {
+                localStorage.removeItem('global_leaderboard');
+                alert('✓ Leaderboard data reset!');
+            }
+        }
+
+        function adminResetAccounts() {
+            if (!isOwner) return;
+            if (confirm('⚠️ Reset ALL user accounts? This cannot be undone!')) {
+                resetAllLogins();
+            }
+        }
+
+        function adminViewAccounts() {
+            if (!isOwner) return;
+            let accounts = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('user_')) {
+                    const data = JSON.parse(localStorage.getItem(key));
+                    accounts.push(data.user);
+                }
+            }
+            if (accounts.length === 0) {
+                alert('No user accounts found.');
+                return;
+            }
+            let message = '📋 All User Accounts:\n\n';
+            accounts.forEach(acc => {
+                message += `• ${acc.name} (${acc.email}) - Joined: ${acc.joinDate}\n`;
+            });
+            alert(message);
+        }
+
+        function adminBanAccount() {
+            if (!isOwner) return;
+            const email = prompt('Enter the email of the account to ban/remove:');
+            if (!email) return;
+            const key = `user_${email}`;
+            if (localStorage.getItem(key)) {
+                if (confirm(`Ban/remove account: ${email}?`)) {
+                    localStorage.removeItem(key);
+                    // Also remove from leaderboard
+                    let leaderboard = JSON.parse(localStorage.getItem('global_leaderboard') || '[]');
+                    leaderboard = leaderboard.filter(u => u.user.email !== email);
+                    localStorage.setItem('global_leaderboard', JSON.stringify(leaderboard));
+                    alert('✓ Account banned/removed!');
+                }
+            } else {
+                alert('Account not found.');
+            }
+        }
+
+        function adminMakeAdmin() {
+            if (!isOwner) return;
+            const email = prompt('Enter the email to make admin:');
+            if (!email) return;
+            if (!OWNER_EMAILS.includes(email)) {
+                OWNER_EMAILS.push(email);
+                alert(`✓ ${email} is now an admin!`);
+            } else {
+                alert('Already an admin.');
+            }
+        }
+
+        function adminAbuseMenu() {
+            if (!isOwner) return;
+            const stage = prompt('Choose Admin Abuse Stage:\n1 = 2x Cookie Clicks\n2 = 4x Cookie Clicks\n3 = 10x Cookie Clicks\n\nEnter 1, 2, or 3:');
+            if (stage === '1' || stage === '2' || stage === '3') {
+                startAdminAbuse(parseInt(stage));
+            }
+        }
+
+        function startAdminAbuse(stage) {
+            adminAbuseActive = true;
+            adminAbuseStage = stage;
+            const multiplier = stage === 1 ? 2 : stage === 2 ? 4 : 10;
+            alert(`⚠️ ADMIN ABUSE ACTIVATED BY DUCKS (Owner): ${multiplier}x Cookie Clicks!`);
+            document.getElementById('admin-abuse-warning').style.display = 'block';
+            updateCookieDisplay(); // Refresh display
+        }
+
+        function stopAdminAbuse() {
+            adminAbuseActive = false;
+            adminAbuseStage = 0;
+            document.getElementById('admin-abuse-warning').style.display = 'none';
+            updateCookieDisplay();
+        }
+
+        function openAdminFromProfile() {
+            // owner clicked their name/tag to open admin panel for current game
+            adminAuthenticated = true;
+            if (currentGame === 'cookie') {
+                updateOwnerPanelCookie();
+                toggleOwnerPanel('owner-cookie');
+            } else if (currentGame === 'pet') {
+                updateOwnerPanelPet();
+                toggleOwnerPanel('owner-pet');
+            } else if (currentGame === 'car') {
+                updateOwnerPanelCar();
+                toggleOwnerPanel('owner-car');
+            } else {
+                alert('Switch to a supported game (Cookie Clicker, Pet Simulator, or Car Simulator) to open its admin panel.');
+            }
+        }
+
+        function displayLeaderboard() {
+            const leaderboard = JSON.parse(localStorage.getItem('global_leaderboard') || '[]');
+            leaderboard.sort((a, b) => b.stats.cookieClickerHighScore - a.stats.cookieClickerHighScore);
+            
+            const leaderboardList = document.getElementById('leaderboard-list');
+            
+            if (leaderboard.length === 0) {
+                leaderboardList.innerHTML = '<p style="color: #999; text-align: center; padding: 20px;">No scores yet. Be the first!</p>';
+                return;
+            }
+
+            let html = '<table style="width: 100%; border-collapse: collapse;">';
+            html += '<tr style="background: #667eea; color: white;"><th style="padding: 10px; text-align: left;">Rank</th><th style="padding: 10px; text-align: left;">Name</th><th style="padding: 10px; text-align: right;">Cookie Score</th></tr>';
+            
+            leaderboard.forEach((entry, idx) => {
+                const bgColor = idx % 2 === 0 ? '#f9f9f9' : '#ffffff';
+                const isEntryOwner = OWNER_EMAILS.includes(entry.user.email);
+                html += `<tr style="background: ${bgColor}; border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px; font-weight: bold;">#${idx + 1}</td>
+                    <td style="padding: 10px;">${entry.user.name}${isEntryOwner ? ' 👑' : ''}</td>
+                    <td style="padding: 10px; text-align: right; font-weight: bold;">${entry.stats.cookieClickerHighScore.toLocaleString()}</td>
+                </tr>`;
+            });
+            html += '</table>';
+            leaderboardList.innerHTML = html;
+        }
+
+        function startGame(game) {
+            document.getElementById('menu').style.display = 'none';
+            
+            // Hide all games
+            document.querySelectorAll('.game-area').forEach(el => el.classList.remove('active'));
+            
+            // Show selected game
+            document.getElementById(game + '-game').classList.add('active');
+            currentGame = game;
+
+            if (game === 'tictactoe') {
+                resetTicTacToe();
+            } else if (game === 'memory') {
+                resetMemory();
+            } else if (game === 'snake') {
+                resetSnake();
+            } else if (game === 'cookie') {
+                resetCookie();
+            } else if (game === 'tap') {
+                resetTap();
+            } else if (game === 'pet') {
+                resetPet();
+            } else if (game === 'fishing') {
+                resetFishing();
+            } else if (game === 'car') {
+                resetCar();
+            } else if (game === 'leaderboard') {
+                if (isGuest) {
+                    document.getElementById('leaderboard-login-prompt').style.display = 'block';
+                    document.getElementById('leaderboard-content').style.display = 'none';
+                } else {
+                    document.getElementById('leaderboard-login-prompt').style.display = 'none';
+                    document.getElementById('leaderboard-content').style.display = 'block';
+                    displayLeaderboard();
+                }
+            }
+        }
+
+        function backToMenu() {
+            document.getElementById('menu').style.display = 'grid';
+            document.querySelectorAll('.game-area').forEach(el => el.classList.remove('active'));
+            if (currentGame === 'snake') {
+                snakeGameRunning = false;
+            } else if (currentGame === 'cookie') {
+                stopCookieAutoClick();
+            } else if (currentGame === 'pet') {
+                if (petInterval) clearInterval(petInterval);
+            } else if (currentGame === 'tap') {
+                if (tapInterval) clearInterval(tapInterval);
+                tapGameActive = false;
+            }
+            adminAuthenticated = false;
+            currentGame = null;
+        }
+
+        // TIC TAC TOE
+        let tttBoard = Array(9).fill('');
+        let tttHumanPlayer = 'X';
+        let tttComputerPlayer = 'O';
+        let tttGameOver = false;
+
+        function makeMove(index) {
+            if (tttGameOver || tttBoard[index] !== '') return;
+            
+            tttBoard[index] = tttHumanPlayer;
+            updateTTTDisplay();
+
+            if (checkTTTWinner(tttHumanPlayer)) {
+                document.getElementById('ttt-status').innerText = 'You Won! 🎉';
+                tttGameOver = true;
+                return;
+            }
+
+            if (tttBoard.every(cell => cell !== '')) {
+                document.getElementById('ttt-status').innerText = "It's a Draw!";
+                tttGameOver = true;
+                return;
+            }
+
+            setTimeout(computerMoveTTT, 500);
+        }
+
+        function computerMoveTTT() {
+            let availableMoves = tttBoard.map((val, idx) => val === '' ? idx : null).filter(val => val !== null);
+            let randomMove = availableMoves[Math.floor(Math.random() * availableMoves.length)];
+            
+            tttBoard[randomMove] = tttComputerPlayer;
+            updateTTTDisplay();
+
+            if (checkTTTWinner(tttComputerPlayer)) {
+                document.getElementById('ttt-status').innerText = 'Computer Won!';
+                tttGameOver = true;
+                return;
+            }
+
+            if (tttBoard.every(cell => cell !== '')) {
+                document.getElementById('ttt-status').innerText = "It's a Draw!";
+                tttGameOver = true;
+            }
+        }
+
+        function checkTTTWinner(player) {
+            const lines = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]
+            ];
+            return lines.some(line => line.every(idx => tttBoard[idx] === player));
+        }
+
+        function updateTTTDisplay() {
+            document.querySelectorAll('#board .cell').forEach((cell, idx) => {
+                cell.innerText = tttBoard[idx];
+            });
+        }
+
+        function resetTicTacToe() {
+            tttBoard = Array(9).fill('');
+            tttGameOver = false;
+            document.getElementById('ttt-status').innerText = 'You are X, Computer is O';
+            updateTTTDisplay();
+        }
+
+        // ROCK PAPER SCISSORS
+        let rpsWins = 0;
+        let rpsLosses = 0;
+
+        function playRPS(choice) {
+            const options = ['rock', 'paper', 'scissors'];
+            const computerChoice = options[Math.floor(Math.random() * 3)];
+            let result = '';
+
+            if (choice === computerChoice) {
+                result = `Tie! Both chose ${choice}.`;
+            } else if (
+                (choice === 'rock' && computerChoice === 'scissors') ||
+                (choice === 'paper' && computerChoice === 'rock') ||
+                (choice === 'scissors' && computerChoice === 'paper')
+            ) {
+                result = `You Win! ${choice} beats ${computerChoice}! 🎉`;
+                rpsWins++;
+            } else {
+                result = `You Lose! ${computerChoice} beats ${choice}. 😢`;
+                rpsLosses++;
+            }
+
+            document.getElementById('rps-result').innerText = result;
+            document.getElementById('rps-wins').innerText = rpsWins;
+            document.getElementById('rps-losses').innerText = rpsLosses;
+        }
+
+        function resetRPS() {
+            rpsWins = 0;
+            rpsLosses = 0;
+            document.getElementById('rps-result').innerText = '';
+            document.getElementById('rps-wins').innerText = '0';
+            document.getElementById('rps-losses').innerText = '0';
+        }
+
+        // MEMORY GAME
+        let memoryCards = [];
+        let memoryFlipped = [];
+        let memoryMatched = 0;
+        let memoryP1Score = 0;
+        let memoryP2Score = 0;
+        let memoryCurrentPlayer = 1;
+        let memorySelectingCards = false;
+
+        function resetMemory() {
+            const symbols = ['🍎', '🍌', '🍊', '🍇', '🍓', '🍒', '🍑', '🥝'];
+            memoryCards = [...symbols, ...symbols].sort(() => Math.random() - 0.5);
+            memoryFlipped = Array(16).fill(false);
+            memoryMatched = 0;
+            memoryP1Score = 0;
+            memoryP2Score = 0;
+            memoryCurrentPlayer = 1;
+            memorySelectingCards = false;
+            
+            const board = document.getElementById('memory-board');
+            board.innerHTML = '';
+            
+            memoryCards.forEach((card, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'memory-card';
+                btn.innerText = '?';
+                btn.onclick = () => flipMemoryCard(idx, btn);
+                board.appendChild(btn);
+            });
+            
+            document.getElementById('memory-matches').innerText = '0';
+            document.getElementById('memory-p1-score').innerText = '0';
+            document.getElementById('memory-p2-score').innerText = '0';
+            document.getElementById('memory-turn').innerText = "Player 1's Turn";
+        }
+
+        function flipMemoryCard(idx, btn) {
+            if (memoryFlipped[idx] || memorySelectingCards) return;
+            
+            memoryFlipped[idx] = true;
+            btn.classList.add('flipped');
+            btn.innerText = memoryCards[idx];
+
+            const flippedIndices = memoryFlipped.map((f, i) => f ? i : null).filter(i => i !== null);
+            
+            if (flippedIndices.length === 2) {
+                memorySelectingCards = true;
+                
+                if (memoryCards[flippedIndices[0]] === memoryCards[flippedIndices[1]]) {
+                    // Match found!
+                    memoryMatched++;
+                    if (memoryCurrentPlayer === 1) {
+                        memoryP1Score++;
+                    } else {
+                        memoryP2Score++;
+                    }
+                    
+                    document.getElementById('memory-matches').innerText = memoryMatched;
+                    document.getElementById('memory-p1-score').innerText = memoryP1Score;
+                    document.getElementById('memory-p2-score').innerText = memoryP2Score;
+                    
+                    if (memoryMatched === 8) {
+                        setTimeout(() => {
+                            const winner = memoryP1Score > memoryP2Score ? 'Player 1' : memoryP2Score > memoryP1Score ? 'Player 2' : 'Tie';
+                            alert(`Game Over! ${winner} Wins! 🎉\\nPlayer 1: ${memoryP1Score} | Player 2: ${memoryP2Score}`);
+                        }, 300);
+                    } else {
+                        // Switch player after match
+                        setTimeout(() => {
+                            memoryCurrentPlayer = memoryCurrentPlayer === 1 ? 2 : 1;
+                            document.getElementById('memory-turn').innerText = memoryCurrentPlayer === 1 ? "Player 1's Turn" : "Player 2's Turn";
+                            memorySelectingCards = false;
+                        }, 800);
+                    }
+                } else {
+                    // No match - cover cards and switch player
+                    setTimeout(() => {
+                        memoryFlipped[flippedIndices[0]] = false;
+                        memoryFlipped[flippedIndices[1]] = false;
+                        document.querySelectorAll('#memory-board .memory-card').forEach((card, i) => {
+                            if (!memoryFlipped[i]) {
+                                card.classList.remove('flipped');
+                                card.innerText = '?';
+                            }
+                        });
+                        
+                        // Switch player
+                        memoryCurrentPlayer = memoryCurrentPlayer === 1 ? 2 : 1;
+                        document.getElementById('memory-turn').innerText = memoryCurrentPlayer === 1 ? "Player 1's Turn" : "Player 2's Turn";
+                        memorySelectingCards = false;
+                    }, 800);
+                }
+            }
+        }
+
+        // SNAKE GAME
+        let snakeX = 10;
+        let snakeY = 10;
+        let snakeBody = [];
+        let foodX = 15;
+        let foodY = 15;
+        let snakeScore = 0;
+        let snakeDX = 0;
+        let snakeDY = 0;
+        let snakeGameRunning = false;
+        let snakeDirection = { x: 0, y: 0 };
+
+        function resetSnake() {
+            snakeX = 10;
+            snakeY = 10;
+            snakeBody = [];
+            foodX = Math.floor(Math.random() * 20);
+            foodY = Math.floor(Math.random() * 20);
+            snakeScore = 0;
+            snakeDX = 0;
+            snakeDY = 0;
+            snakeDirection = { x: 0, y: 0 };
+            document.getElementById('snake-score').innerText = '0';
+            drawSnakeGame();
+        }
+
+        function drawSnakeGame() {
+            const canvas = document.getElementById('snakeCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            ctx.fillStyle = '#f0f0f0';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#667eea';
+            ctx.fillRect(snakeX * 20, snakeY * 20, 20, 20);
+            
+            snakeBody.forEach(segment => {
+                ctx.fillStyle = '#764ba2';
+                ctx.fillRect(segment.x * 20, segment.y * 20, 20, 20);
+            });
+            
+            ctx.fillStyle = '#ff6b6b';
+            ctx.fillRect(foodX * 20, foodY * 20, 20, 20);
+        }
+
+        function updateSnakeGame() {
+            snakeBody.unshift({ x: snakeX, y: snakeY });
+            snakeX += snakeDirection.x;
+            snakeY += snakeDirection.y;
+
+            if (snakeX === foodX && snakeY === foodY) {
+                snakeScore += 10;
+                document.getElementById('snake-score').innerText = snakeScore;
+                foodX = Math.floor(Math.random() * 20);
+                foodY = Math.floor(Math.random() * 20);
+            } else {
+                snakeBody.pop();
+            }
+
+            if (snakeX < 0 || snakeX >= 20 || snakeY < 0 || snakeY >= 20 || 
+                snakeBody.some(seg => seg.x === snakeX && seg.y === snakeY)) {
+                snakeGameRunning = false;
+                alert('Game Over! Score: ' + snakeScore);
+            }
+
+            drawSnakeGame();
+        }
+
+        function toggleSnakeGame() {
+            snakeGameRunning = !snakeGameRunning;
+            if (snakeGameRunning) {
+                snakeGameLoop();
+            }
+        }
+
+        function snakeGameLoop() {
+            if (snakeGameRunning) {
+                updateSnakeGame();
+                setTimeout(snakeGameLoop, 100);
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (currentGame !== 'snake') return;
+            if (e.key === 'ArrowUp' && snakeDirection.y === 0) snakeDirection = { x: 0, y: -1 };
+            if (e.key === 'ArrowDown' && snakeDirection.y === 0) snakeDirection = { x: 0, y: 1 };
+            if (e.key === 'ArrowLeft' && snakeDirection.x === 0) snakeDirection = { x: -1, y: 0 };
+            if (e.key === 'ArrowRight' && snakeDirection.x === 0) snakeDirection = { x: 1, y: 0 };
+        });
+
+        // COOKIE CLICKER
+        let cookieCount = 0;
+        let cookiePerSecond = 0;
+        let cookieClicks = 1;
+        let critChance = 0;
+        let critDamage = 1;
+        
+        let cookieUpgrades = {
+            cursor: { count: 0, cost: 15, baseCost: 15, effect: 1 },
+            grandma: { count: 0, cost: 100, baseCost: 100, effect: 1 },
+            farm: { count: 0, cost: 500, baseCost: 500, effect: 10 },
+            factory: { count: 0, cost: 2000, baseCost: 2000, effect: 100 },
+            synergy: { count: 0, cost: 5000, baseCost: 5000, effect: 500 },
+            crit: { count: 0, cost: 10000, baseCost: 10000, effect: 0.01 },
+            opclicker: { count: 0, cost: 50000, baseCost: 50000, effect: 100 },
+            godclicker: { count: 0, cost: 100000, baseCost: 100000, effect: 1000 }
+        };
+
+        function resetCookie() {
+            cookieCount = 0;
+            cookiePerSecond = 0;
+            cookieClicks = 1;
+            critChance = 0;
+            critDamage = 1;
+            cookieUpgrades = {
+                cursor: { count: 0, cost: 15, baseCost: 15, effect: 1 },
+                grandma: { count: 0, cost: 100, baseCost: 100, effect: 1 },
+                farm: { count: 0, cost: 500, baseCost: 500, effect: 10 },
+                factory: { count: 0, cost: 2000, baseCost: 2000, effect: 100 },
+                synergy: { count: 0, cost: 5000, baseCost: 5000, effect: 500 },
+                crit: { count: 0, cost: 10000, baseCost: 10000, effect: 0.01 },
+                opclicker: { count: 0, cost: 50000, baseCost: 50000, effect: 100 },
+                godclicker: { count: 0, cost: 100000, baseCost: 100000, effect: 1000 }
+            };
+            updateCookieDisplay();
+            updateCookieButtons();
+            startCookieAutoClick();
+        }
+
+        function clickCookie() {
+            let damage = cookieClicks;
+            // Apply admin abuse multiplier
+            if (adminAbuseActive) {
+                const multiplier = adminAbuseStage === 1 ? 2 : adminAbuseStage === 2 ? 4 : 10;
+                damage *= multiplier;
+            }
+            if (Math.random() < critChance) {
+                damage = Math.floor(damage * critDamage);
+            }
+            cookieCount += damage;
+            updateCookieDisplay();
+        }
+
+        function buyCookieUpgrade(type) {
+            const upgrade = cookieUpgrades[type];
+            if (cookieCount >= upgrade.cost) {
+                cookieCount -= upgrade.cost;
+                upgrade.count++;
+                
+                // Update costs and effects
+                if (type === 'cursor') {
+                    cookieClicks += upgrade.effect;
+                    upgrade.cost = Math.ceil(upgrade.baseCost * Math.pow(1.1, upgrade.count));
+                } else if (type === 'grandma') {
+                    cookiePerSecond += upgrade.effect;
+                    upgrade.cost = Math.ceil(upgrade.baseCost * Math.pow(1.1, upgrade.count));
+                } else if (type === 'farm') {
+                    cookiePerSecond += upgrade.effect;
+                    upgrade.cost = Math.ceil(upgrade.baseCost * Math.pow(1.1, upgrade.count));
+                } else if (type === 'factory') {
+                    cookiePerSecond += upgrade.effect;
+                    upgrade.cost = Math.ceil(upgrade.baseCost * Math.pow(1.1, upgrade.count));
+                } else if (type === 'synergy') {
+                    cookiePerSecond += upgrade.effect;
+                    upgrade.cost = Math.ceil(upgrade.baseCost * Math.pow(1.1, upgrade.count));
+                } else if (type === 'crit') {
+                    critChance += 0.01; // Increase crit chance by 1%
+                    upgrade.cost = Math.ceil(upgrade.baseCost * Math.pow(1.1, upgrade.count));
+                } else if (type === 'opclicker') {
+                    cookiePerSecond += upgrade.effect;
+                    upgrade.cost = Math.ceil(upgrade.baseCost * Math.pow(1.1, upgrade.count));
+                } else if (type === 'godclicker') {
+                    cookieClicks += upgrade.effect;
+                    upgrade.cost = Math.ceil(upgrade.baseCost * Math.pow(1.1, upgrade.count));
+                }
+                
+                updateCookieDisplay();
+                updateCookieButtons();
+            }
+        }
+
+        function buyMaxCookieUpgrade(type) {
+            const upgrade = cookieUpgrades[type];
+            let affordable = 0;
+            let tempCost = upgrade.cost;
+            let tempCount = upgrade.count;
+            let totalCost = 0;
+            
+            // Calculate how many we can afford
+            while (cookieCount >= totalCost + tempCost) {
+                totalCost += tempCost;
+                affordable++;
+                tempCount++;
+                tempCost = Math.ceil(upgrade.baseCost * Math.pow(1.1, tempCount));
+            }
+            
+            if (affordable > 0) {
+                cookieCount -= totalCost;
+                upgrade.count += affordable;
+                
+                // Apply effects for all purchased upgrades
+                for (let i = 0; i < affordable; i++) {
+                    if (type === 'cursor' || type === 'godclicker') {
+                        cookieClicks += upgrade.effect;
+                    } else if (type === 'crit') {
+                        critChance += 0.01;
+                    } else {
+                        cookiePerSecond += upgrade.effect;
+                    }
+                }
+                
+                // Update final cost
+                upgrade.cost = Math.ceil(upgrade.baseCost * Math.pow(1.1, upgrade.count));
+                
+                updateCookieDisplay();
+                updateCookieButtons();
+            }
+        }
+
+        function buyAllMaxCookieUpgrades() {
+            const upgradeTypes = ['cursor', 'grandma', 'farm', 'factory', 'synergy', 'crit', 'opclicker', 'godclicker'];
+            let totalSpent = 0;
+            
+            upgradeTypes.forEach(type => {
+                const upgrade = cookieUpgrades[type];
+                let affordable = 0;
+                let tempCost = upgrade.cost;
+                let tempCount = upgrade.count;
+                let typeCost = 0;
+                
+                // Calculate how many we can afford of this type
+                while (cookieCount >= totalSpent + typeCost + tempCost) {
+                    typeCost += tempCost;
+                    affordable++;
+                    tempCount++;
+                    tempCost = Math.ceil(upgrade.baseCost * Math.pow(1.1, tempCount));
+                }
+                
+                if (affordable > 0) {
+                    totalSpent += typeCost;
+                    upgrade.count += affordable;
+                    
+                    // Apply effects
+                    for (let i = 0; i < affordable; i++) {
+                        if (type === 'cursor' || type === 'godclicker') {
+                            cookieClicks += upgrade.effect;
+                        } else if (type === 'crit') {
+                            critChance += 0.01;
+                        } else {
+                            cookiePerSecond += upgrade.effect;
+                        }
+                    }
+                    
+                    // Update final cost
+                    upgrade.cost = Math.ceil(upgrade.baseCost * Math.pow(1.1, upgrade.count));
+                }
+            });
+            
+            if (totalSpent > 0) {
+                cookieCount -= totalSpent;
+                updateCookieDisplay();
+                updateCookieButtons();
+            }
+        }
+
+        function updateCookieDisplay() {
+            document.getElementById('cookie-count').innerText = Math.floor(cookieCount);
+            document.getElementById('cookie-per-sec').innerText = Math.floor(cookiePerSecond);
+            let effectiveClicks = cookieClicks;
+            if (adminAbuseActive) {
+                const multiplier = adminAbuseStage === 1 ? 2 : adminAbuseStage === 2 ? 4 : 10;
+                effectiveClicks *= multiplier;
+            }
+            document.getElementById('cookie-per-click').innerText = effectiveClicks;
+            document.getElementById('cookie-crit-chance').innerText = Math.floor(critChance * 100);
+            document.getElementById('cookie-crit-damage').innerText = critDamage.toFixed(1);
+            
+            // Update high score if logged in
+            if (!isGuest && cookieCount > userStats.cookieClickerHighScore) {
+                userStats.cookieClickerHighScore = Math.floor(cookieCount);
+                saveUserStats();
+            }
+        }
+
+        function updateCookieButtons() {
+            const buttons = {
+                cursor: 'btn-cursor',
+                grandma: 'btn-grandma',
+                farm: 'btn-farm',
+                factory: 'btn-factory',
+                synergy: 'btn-synergy',
+                crit: 'btn-crit',
+                opclicker: 'btn-opclicker',
+                godclicker: 'btn-godclicker'
+            };
+            
+            const priceDisplay = {
+                cursor: 'price-cursor',
+                grandma: 'price-grandma',
+                farm: 'price-farm',
+                factory: 'price-factory',
+                synergy: 'price-synergy',
+                crit: 'price-crit',
+                opclicker: 'price-opclicker',
+                godclicker: 'price-godclicker'
+            };
+            
+            for (let [type, btnId] of Object.entries(buttons)) {
+                const upgrade = cookieUpgrades[type];
+                const btn = document.getElementById(btnId);
+                const priceEl = document.getElementById(priceDisplay[type]);
+                const label = {
+                    cursor: '👆 Cursor',
+                    grandma: '👵 Grandma',
+                    farm: '🚜 Farm',
+                    factory: '🏭 Factory',
+                    synergy: '⚡ Synergy',
+                    crit: '💥 Crit Upgrade',
+                    opclicker: '⭐ OP Clicker',
+                    godclicker: '🔱 GOD Clicker'
+                };
+                btn.textContent = `${label[type]} (${upgrade.cost})`;
+                priceEl.textContent = upgrade.cost;
+                btn.disabled = cookieCount < upgrade.cost;
+            }
+        }
+
+        let cookieInterval;
+        function startCookieAutoClick() {
+            // Always start the interval when cookie game starts
+            if (!cookieInterval) {
+                cookieInterval = setInterval(() => {
+                    // Add whatever the current per-second value is
+                    if (cookiePerSecond > 0) {
+                        cookieCount += cookiePerSecond;
+                        updateCookieDisplay();
+                    }
+                }, 1000);
+            }
+        }
+
+        function stopCookieAutoClick() {
+            if (cookieInterval) {
+                clearInterval(cookieInterval);
+                cookieInterval = null;
+            }
+        }
+
+        // TAP TAP TAP
+        let tapCount = 0;
+        let tapTimeLeft = 30;
+        let tapGameActive = false;
+        let tapInterval;
+
+        function resetTap() {
+            tapCount = 0;
+            tapTimeLeft = 30;
+            tapGameActive = false;
+            if (tapInterval) clearInterval(tapInterval);
+            document.getElementById('tap-count').innerText = '0';
+            document.getElementById('tap-time').innerText = '30';
+            document.getElementById('tap-start-btn').disabled = false;
+        }
+
+        function tapButton() {
+            if (tapGameActive) {
+                tapCount++;
+                document.getElementById('tap-count').innerText = tapCount;
+            }
+        }
+
+        function startTapGame() {
+            tapCount = 0;
+            tapTimeLeft = 30;
+            tapGameActive = true;
+            document.getElementById('tap-count').innerText = '0';
+            document.getElementById('tap-start-btn').disabled = true;
+
+            tapInterval = setInterval(() => {
+                tapTimeLeft--;
+                document.getElementById('tap-time').innerText = tapTimeLeft;
+
+                if (tapTimeLeft <= 0) {
+                    clearInterval(tapInterval);
+                    tapGameActive = false;
+                    document.getElementById('tap-start-btn').disabled = false;
+                    alert(`Game Over! You tapped ${tapCount} times! 🎉`);
+                }
+            }, 1000);
+        }
+
+        // PET SIMULATOR
+        let petType = '🐶';
+        const petTypes = ['🐶', '🐱', '🐰', '🦊', '🐻'];
+        let petHappiness = 50;
+        let petHunger = 50;
+        let petEnergy = 50;
+        let petInterval;
+
+        function resetPet() {
+            petType = petTypes[Math.floor(Math.random() * petTypes.length)];
+            petHappiness = 50;
+            petHunger = 50;
+            petEnergy = 50;
+            if (petInterval) clearInterval(petInterval);
+            petInterval = setInterval(() => {
+                petHunger = Math.min(100, petHunger + 2);
+                petHappiness = Math.max(0, petHappiness - 1);
+                petEnergy = Math.max(0, petEnergy - 1);
+                updatePetDisplay();
+            }, 3000);
+            updatePetDisplay();
+        }
+
+        function petAction(action) {
+            if (action === 'feed') {
+                petHunger = Math.max(0, petHunger - 30);
+                petHappiness = Math.min(100, petHappiness + 10);
+                showPetReaction('😋');
+            } else if (action === 'play') {
+                if (petEnergy < 20) {
+                    alert('Pet is too tired! Let it rest.');
+                    return;
+                }
+                petHappiness = Math.min(100, petHappiness + 30);
+                petEnergy = Math.max(0, petEnergy - 20);
+                showPetReaction('😊');
+            } else if (action === 'rest') {
+                petEnergy = Math.min(100, petEnergy + 25);
+                petHappiness = Math.min(100, petHappiness + 5);
+                showPetReaction('😴');
+            }
+            updatePetDisplay();
+        }
+
+        function showPetReaction(emoji) {
+            const oldEmoji = document.getElementById('pet-emoji').innerText;
+            document.getElementById('pet-emoji').innerText = emoji;
+            setTimeout(() => {
+                document.getElementById('pet-emoji').innerText = oldEmoji;
+            }, 500);
+        }
+
+        function changePet() {
+            const currentIndex = petTypes.indexOf(petType);
+            petType = petTypes[(currentIndex + 1) % petTypes.length];
+            updatePetDisplay();
+        }
+
+        function updatePetDisplay() {
+            document.getElementById('pet-emoji').innerText = petType;
+            document.getElementById('pet-happiness').innerText = petHappiness;
+            document.getElementById('pet-hunger').innerText = petHunger;
+            document.getElementById('pet-energy').innerText = petEnergy;
+            
+            document.getElementById('happiness-bar').style.width = petHappiness + '%';
+            document.getElementById('hunger-bar').style.width = petHunger + '%';
+            document.getElementById('energy-bar').style.width = petEnergy + '%';
+        }
+
+        function startPetDecay() {
+            if (!petInterval && currentGame === 'pet') {
+                petInterval = setInterval(() => {
+                    if (currentGame === 'pet') {
+                        petHappiness = Math.max(0, petHappiness - 1);
+                        petHunger = Math.min(100, petHunger + 1.5);
+                        petEnergy = Math.max(0, petEnergy - 0.5);
+                        updatePetDisplay();
+                    }
+                }, 500);
+            }
+        }
+
+        // FISHING SIMULATOR
+        let fishCaught = 0;
+        let totalWeight = 0;
+        let isFishing = false;
+
+        function castFishingLine() {
+            if (isFishing) return;
+            isFishing = true;
+            document.getElementById('fishing-display').innerText = '🎣 Casting...';
+            
+            setTimeout(() => {
+                const fishChance = Math.random();
+                if (fishChance > 0.3) {
+                    const weight = Math.floor(Math.random() * 15) + 2;
+                    fishCaught++;
+                    totalWeight += weight;
+                    document.getElementById('fishing-display').innerText = `🐟 Caught a ${weight} lb fish!`;
+                } else {
+                    document.getElementById('fishing-display').innerText = '😞 No catch this time...';
+                }
+                document.getElementById('fish-caught').innerText = fishCaught;
+                document.getElementById('total-weight').innerText = totalWeight;
+                isFishing = false;
+            }, 2000);
+        }
+
+        function resetFishing() {
+            fishCaught = 0;
+            totalWeight = 0;
+            document.getElementById('fishing-display').innerText = 'Cast your line...';
+            document.getElementById('fish-caught').innerText = '0';
+            document.getElementById('total-weight').innerText = '0';
+            isFishing = false;
+        }
+
+        // CAR SIMULATOR
+        let carSpeed = 0;
+        let carMaxSpeed = 120;
+        let carAcceleration = 15;
+        let carFuel = 100;
+        let carTankSize = 100;
+        let carDistance = 0;
+        let carCost = 0;
+        let carDriving = false;
+        let carEfficiency = 5;
+
+        let carUpgrades = {
+            engine: { count: 0, cost: 200, baseCost: 200, effect: { speedIncrease: 20, accelIncrease: 3 } },
+            turbo: { count: 0, cost: 500, baseCost: 500, effect: { speedIncrease: 30, accelIncrease: 5 } },
+            tank: { count: 0, cost: 300, baseCost: 300, effect: { tankIncrease: 25 } },
+            tires: { count: 0, cost: 150, baseCost: 150, effect: { efficiencyDecrease: 0.5 } },
+            nitro: { count: 0, cost: 1000, baseCost: 1000, effect: { speedBoost: 2 } },
+            aerodynamics: { count: 0, cost: 750, baseCost: 750, effect: { accelIncrease: 2, efficiencyIncrease: 1 } }
+        };
+
+        function driveCarSimulator() {
+            if (carFuel <= 0) {
+                alert('Out of fuel! Refuel first.');
+                return;
+            }
+            if (!carDriving) {
+                carDriving = true;
+                document.getElementById('car-emoji').style.animation = 'move 1s infinite';
+            }
+
+            carSpeed = Math.min(carMaxSpeed, carSpeed + carAcceleration);
+            carFuel = Math.max(0, carFuel - carEfficiency);
+            carDistance += Math.floor(carSpeed / 10);
+            carCost += Math.floor(carSpeed / 5);
+            updateCarDisplay();
+
+            if (carFuel <= 0) {
+                carDriving = false;
+                alert('Out of fuel!');
+            }
+        }
+
+        function refuelCar() {
+            carFuel = carTankSize;
+            updateCarDisplay();
+        }
+
+        function buyCarUpgrade(type) {
+            const upgrade = carUpgrades[type];
+            if (carCost >= upgrade.cost) {
+                carCost -= upgrade.cost;
+                upgrade.count++;
+
+                // Apply upgrade effects
+                if (type === 'engine') {
+                    carMaxSpeed += upgrade.effect.speedIncrease;
+                    carAcceleration += upgrade.effect.accelIncrease;
+                    upgrade.cost = Math.ceil(upgrade.baseCost * Math.pow(1.15, upgrade.count));
+                } else if (type === 'turbo') {
+                    carMaxSpeed += upgrade.effect.speedIncrease;
+                    carAcceleration += upgrade.effect.accelIncrease;
+                    upgrade.cost = Math.ceil(upgrade.baseCost * Math.pow(1.2, upgrade.count));
+                } else if (type === 'tank') {
+                    carTankSize += upgrade.effect.tankIncrease;
+                    carFuel = carTankSize;
+                    upgrade.cost = Math.ceil(upgrade.baseCost * Math.pow(1.15, upgrade.count));
+                } else if (type === 'tires') {
+                    carEfficiency -= upgrade.effect.efficiencyDecrease;
+                    upgrade.cost = Math.ceil(upgrade.baseCost * Math.pow(1.15, upgrade.count));
+                } else if (type === 'nitro') {
+                    upgrade.cost = Math.ceil(upgrade.baseCost * Math.pow(1.25, upgrade.count));
+                } else if (type === 'aerodynamics') {
+                    carAcceleration += upgrade.effect.accelIncrease;
+                    carEfficiency += upgrade.effect.efficiencyIncrease;
+                    upgrade.cost = Math.ceil(upgrade.baseCost * Math.pow(1.2, upgrade.count));
+                }
+
+                updateCarDisplay();
+                updateCarButtons();
+            }
+        }
+
+        function resetCar() {
+            carSpeed = 0;
+            carMaxSpeed = 120;
+            carAcceleration = 15;
+            carFuel = 100;
+            carTankSize = 100;
+            carDistance = 0;
+            carCost = 0;
+            carDriving = false;
+            carEfficiency = 5;
+            document.getElementById('car-emoji').style.animation = 'none';
+            updateCarDisplay();
+            updateCarButtons();
+        }
+
+        function updateCarDisplay() {
+            document.getElementById('car-speed').innerText = carSpeed;
+            document.getElementById('car-max-speed').innerText = carMaxSpeed;
+            document.getElementById('car-accel').innerText = carAcceleration;
+            document.getElementById('car-fuel').innerText = Math.floor(carFuel);
+            document.getElementById('car-tank-size').innerText = Math.floor(carTankSize);
+            document.getElementById('car-distance').innerText = carDistance;
+            document.getElementById('car-cost').innerText = carCost;
+            document.getElementById('car-efficiency').innerText = carEfficiency;
+        }
+
+        function updateCarButtons() {
+            const buttons = {
+                engine: 'btn-engine',
+                turbo: 'btn-turbo',
+                tank: 'btn-tank',
+                tires: 'btn-tires',
+                nitro: 'btn-nitro',
+                aerodynamics: 'btn-aero'
+            };
+
+            const labels = {
+                engine: '⚙️ Engine',
+                turbo: '🔥 Turbo',
+                tank: '🛢️ Tank',
+                tires: '🛞 Tires',
+                nitro: '💨 Nitro Boost',
+                aerodynamics: '💎 Aerodynamics'
+            };
+
+            for (let [type, btnId] of Object.entries(buttons)) {
+                const upgrade = carUpgrades[type];
+                const btn = document.getElementById(btnId);
+                btn.textContent = `${labels[type]} ($${upgrade.cost})`;
+                btn.disabled = carCost < upgrade.cost;
+            }
+        }
+
+        // Initialize auto-clicker and pet decay when games start
+        const originalStartGame = startGame;
+        window.startGame = function(game) {
+            originalStartGame(game);
+            if (game === 'cookie') {
+                startCookieAutoClick();
+                updateOwnerPanelCookie();
+                updateCookieButtons();
+            } else if (game === 'pet') {
+                startPetDecay();
+                updateOwnerPanelPet();
+            } else if (game === 'car') {
+                updateOwnerPanelCar();
+                updateCarButtons();
+            }
+        };
+
+        // Owner Panel Functions
+        function toggleOwnerPanel(panelId) {
+            const panel = document.getElementById(panelId);
+            if (panel) {
+                panel.classList.toggle('active');
+            }
+        }
+
+        function updateOwnerPanelCookie() {
+            document.getElementById('owner-cookies').value = Math.floor(cookieCount);
+            document.getElementById('owner-click').value = cookieClicks;
+            document.getElementById('owner-persec').value = Math.floor(cookiePerSecond);
+        }
+
+        function applyOwnerCookie() {
+            cookieCount = parseInt(document.getElementById('owner-cookies').value) || 0;
+            cookieClicks = parseInt(document.getElementById('owner-click').value) || 1;
+            cookiePerSecond = parseInt(document.getElementById('owner-persec').value) || 0;
+            updateCookieDisplay();
+            updateCookieButtons();
+        }
+
+        function updateOwnerPanelPet() {
+            document.getElementById('owner-happiness').value = petHappiness;
+            document.getElementById('owner-hunger').value = petHunger;
+            document.getElementById('owner-energy').value = petEnergy;
+        }
+
+        function applyOwnerPet() {
+            petHappiness = Math.min(100, Math.max(0, parseInt(document.getElementById('owner-happiness').value) || 50));
+            petHunger = Math.min(100, Math.max(0, parseInt(document.getElementById('owner-hunger').value) || 50));
+            petEnergy = Math.min(100, Math.max(0, parseInt(document.getElementById('owner-energy').value) || 50));
+            updatePetDisplay();
+        }
+
+        function updateOwnerPanelCar() {
+            document.getElementById('owner-speed').value = Math.floor(carSpeed);
+            document.getElementById('owner-fuel').value = Math.floor(carFuel);
+            document.getElementById('owner-distance').value = carDistance;
+            document.getElementById('owner-money').value = carCost;
+        }
+
+        function applyOwnerCar() {
+            carSpeed = parseInt(document.getElementById('owner-speed').value) || 0;
+            carFuel = parseInt(document.getElementById('owner-fuel').value) || 100;
+            carDistance = parseInt(document.getElementById('owner-distance').value) || 0;
+            carCost = parseInt(document.getElementById('owner-money').value) || 0;
+            updateCarDisplay();
+        }
+
+        // Admin Authentication Functions
+        function openLoginModal(panelType) {
+            pendingAdminPanel = panelType;
+            adminAuthenticated = false;
+            document.getElementById('admin-password').value = '';
+            document.getElementById('login-error').classList.remove('show');
+            document.getElementById('login-modal').classList.add('active');
+            document.getElementById('admin-password').focus();
+        }
+
+        function closeLoginModal() {
+            document.getElementById('login-modal').classList.remove('active');
+            document.getElementById('admin-password').value = '';
+            document.getElementById('login-error').classList.remove('show');
+            pendingAdminPanel = null;
+        }
+
+        function attemptAdminLogin() {
+            const passwordInput = document.getElementById('admin-password').value;
+            const errorDisplay = document.getElementById('login-error');
+
+            if (passwordInput === ADMIN_PASSWORD) {
+                adminAuthenticated = true;
+                errorDisplay.classList.remove('show');
+                closeLoginModal();
+                
+                // Now show the requested admin panel
+                if (pendingAdminPanel === 'cookie') {
+                    updateOwnerPanelCookie();
+                    toggleOwnerPanel('owner-cookie');
+                } else if (pendingAdminPanel === 'pet') {
+                    updateOwnerPanelPet();
+                    toggleOwnerPanel('owner-pet');
+                } else if (pendingAdminPanel === 'car') {
+                    updateOwnerPanelCar();
+                    toggleOwnerPanel('owner-car');
+                }
+                pendingAdminPanel = null;
+            } else {
+                errorDisplay.classList.add('show');
+                document.getElementById('admin-password').value = '';
+                document.getElementById('admin-password').focus();
+            }
+        }
+
+        // Allow Enter key to submit login
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                if (document.getElementById('login-modal').classList.contains('active')) {
+                    attemptAdminLogin();
+                }
+                if (document.getElementById('user-login-modal').classList.contains('active')) {
+                    attemptUserLogin();
+                }
+            }
+            if (e.key === 'Escape') {
+                if (document.getElementById('login-modal').classList.contains('active')) {
+                    closeLoginModal();
+                }
+                if (document.getElementById('user-login-modal').classList.contains('active')) {
+                    closeUserLoginModal();
+                }
+            }
+        });
+
+        // Keyboard shortcut to request admin access (Press O)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'o' || e.key === 'O') {
+                if (document.getElementById('login-modal').classList.contains('active')) {
+                    return; // Don't trigger if login modal is already open
+                }
+                
+                // If already authenticated, just toggle the admin panel
+                if (adminAuthenticated) {
+                    if (currentGame === 'cookie') {
+                        updateOwnerPanelCookie();
+                        toggleOwnerPanel('owner-cookie');
+                    } else if (currentGame === 'pet') {
+                        updateOwnerPanelPet();
+                        toggleOwnerPanel('owner-pet');
+                    } else if (currentGame === 'car') {
+                        updateOwnerPanelCar();
+                        toggleOwnerPanel('owner-car');
+                    }
+                } else {
+                    // If owner, bypass password and open panel
+                    if (isOwner) {
+                        adminAuthenticated = true;
+                        if (currentGame === 'cookie') {
+                            updateOwnerPanelCookie();
+                            toggleOwnerPanel('owner-cookie');
+                        } else if (currentGame === 'pet') {
+                            updateOwnerPanelPet();
+                            toggleOwnerPanel('owner-pet');
+                        } else if (currentGame === 'car') {
+                            updateOwnerPanelCar();
+                            toggleOwnerPanel('owner-car');
+                        } else {
+                            alert('Switch to Cookie Clicker, Pet Simulator, or Car Simulator to open its admin panel.');
+                        }
+                    } else {
+                        // Request login if not authenticated
+                        if (currentGame === 'cookie') {
+                            openLoginModal('cookie');
+                        } else if (currentGame === 'pet') {
+                            openLoginModal('pet');
+                        } else if (currentGame === 'car') {
+                            openLoginModal('car');
+                        }
+                    }
+                }
+            }
+        });
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            // Initialize profile display (don't reset data on reload)
+            updateProfileDisplay();
+            // Show login prompt on first load if no previous session
+            if (isGuest && !currentUser) {
+                openUserLoginModal();
+            }
+        });
+    </script>
+    </div>
+</body>
+</html>
